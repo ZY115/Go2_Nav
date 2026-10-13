@@ -1,0 +1,9 @@
+<library path="edge_quadruped_controller">
+    <class name="edge_quadruped_controller/EdgeQuadrupedController"
+           type="edge::control::quadruped::EdgeQuadrupedController"
+           base_class_type="controller_interface::ControllerInterface">
+        <description>
+            ROS2-Control Plugin for Edge Quadruped Controller
+        </description>
+    </class>
+</library>

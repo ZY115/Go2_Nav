@@ -1,0 +1,12 @@
+*code/
+tests/*/
+.python-version
+*.so
+__pycache__
+.idea
+.DS_Store
+.ipynb_checkpoints
+dist/
+cvxpygen/cvxpygen.egg-info/
+cvxpygen.egg-info/
+ECVXCONE/

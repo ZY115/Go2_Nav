@@ -1,0 +1,9 @@
+<library path="unitree_go2_hardware">
+  <class name="unitree_go2_hardware/Go2HardwareInterface"
+         type="edge::go2_hardware_interface::Go2HardwareInterface"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      The ros2 control hardware interface for the Unitree Go2 robot.
+    </description>
+  </class>
+</library>

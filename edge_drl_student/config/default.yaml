@@ -1,0 +1,4 @@
+defaults:
+  - experiment: train_cognitive
+  - buffer: cognitive
+  - system: runtime

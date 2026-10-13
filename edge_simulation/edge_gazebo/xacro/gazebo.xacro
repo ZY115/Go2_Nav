@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="edge_gazebo" value="$(find edge_gazebo)"/>
+
+  <!-- Include necessary xacro files -->
+  <xacro:include filename="${edge_gazebo}/xacro/sensors/imu.xacro"/>
+  <xacro:include filename="${edge_gazebo}/xacro/sensors/camera.xacro"/>
+  <xacro:include filename="$(find gz_quadruped_hardware)/xacro/foot_force_sensor.xacro"/>
+  <xacro:include filename="${edge_gazebo}/xacro/ros2_control/gzsim.ros2_control.xacro"/>
+
+  <gazebo reference="trunk">
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
+    <self_collide>1</self_collide>
+  </gazebo>
+
+  <!-- IMU Sensor -->
+  <xacro:imu link_name="imu_link" joint_name="imu_joint" topic="imu" rate="1000"/>
+
+  <!-- Foot Force Sensors -->
+  <xacro:foot_force_sensor name="FL" suffix="foot_fixed"/>
+  <xacro:foot_force_sensor name="RL" suffix="foot_fixed"/>
+  <xacro:foot_force_sensor name="FR" suffix="foot_fixed"/>
+  <xacro:foot_force_sensor name="RR" suffix="foot_fixed"/>
+
+  <xacro:arg name="EXTERNAL_SENSORS" default="true"/>
+  <xacro:if value="$(arg EXTERNAL_SENSORS)">
+    <xacro:include filename="$(find gz_quadruped_playground)/models/D435/model.xacro"/>
+
+    <xacro:d435 camID="1" name="d435">
+      <origin rpy="0 0.1 0" xyz="0.28 0 0.093"/>
+    </xacro:d435>
+
+    <!-- Camera Sensors -->
+    <xacro:camera link_name="front_camera" topic="camera/image/raw" camera_info_topic="camera/camera_info" rate="30"/>
+
+    <!-- LiDAR Sensor -->
+    <gazebo reference="lidar_link">
+      <sensor name='L1_lidar' type='gpu_lidar'>
+        <!-- <pose relative_to="lidar">0 0 0 0 0 0</pose> -->
+        <topic>scan</topic>
+        <update_rate>10</update_rate>
+        <gz_frame_id>lidar_link</gz_frame_id>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>1440</samples>
+              <resolution>1</resolution>
+              <min_angle>1.396263</min_angle>
+              <max_angle>4.8869</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>4</samples>
+              <resolution>1</resolution>
+              <min_angle>0.0061799</min_angle>
+              <max_angle>0.0461799</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.05</min>
+            <max>10.0</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+
+        <always_on>1</always_on>
+        <visualize>true</visualize>
+      </sensor>
+    </gazebo>
+    
+  </xacro:if>
+</robot>

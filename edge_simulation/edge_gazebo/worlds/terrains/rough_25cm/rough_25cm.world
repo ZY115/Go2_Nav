@@ -1,0 +1,423 @@
+<?xml version="1.0"?>
+<sdf version='1.8'>
+  <world name='openwild_outdoor'>
+    
+    <frame name='world_offset'>
+      <pose relative_to='world'>6 0 0 0 0 0</pose>
+    </frame>
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    
+    <plugin
+      filename="ignition-gazebo-physics-system"
+      name="gz::sim::systems::Physics">
+    </plugin>
+    <plugin
+      filename="ignition-gazebo-user-commands-system"
+      name="gz::sim::systems::UserCommands">
+    </plugin>
+    <plugin
+      filename="ignition-gazebo-scene-broadcaster-system"
+      name="gz::sim::systems::SceneBroadcaster">
+    </plugin>
+    <plugin
+      filename="ignition-gazebo-contact-system"
+      name="gz::sim::systems::Contact">
+    </plugin>
+    <plugin
+      filename="ignition-gazebo-apply-link-wrench-system"
+      name="gz::sim::systems::ApplyLinkWrench">
+    </plugin>
+
+    <!-- Main directional light - softer warm indoor lighting -->
+    <light name='sun' type='directional'>
+      <cast_shadows>true</cast_shadows>
+      <pose relative_to='world_offset'>5 5 10 0 0 0</pose>
+      <diffuse>0.7 0.68 0.65 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.5 -1</direction>
+    </light>
+
+    <!-- Soft point light for ambient effect -->
+    <light name='point_light_1' type='point'>
+      <pose relative_to='world_offset'>0 0 5 0 0 0</pose>
+      <diffuse>0.4 0.4 0.4 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>false</cast_shadows>
+    </light>
+
+    <!-- Ground plane - gray tile effect -->
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="mesh_terrain">
+      <pose>1 -4 -0.25  0 0 0</pose>
+      <static>true</static>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>rough_25cm.stl</uri></mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh><uri>rough_25cm.stl</uri></mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>100</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Room walls model -->
+    <!-- <include>
+      <uri>model://structures/enclosing_wall</uri>
+      <pose relative_to='world_offset'>0.000564 -0.000118 0 0 0 0</pose>   
+      <name>enclosing_wall</name>
+    </include> -->
+
+    <!-- Falling rock -->
+    <!-- <include>
+      <uri>model://props/falling_rock3</uri>
+      <pose relative_to='world_offset'>4 4 0.5 0 0 0</pose>   
+      <name>falling_rock</name>
+    </include> -->
+
+    <!-- Pine tree -->
+    <include>
+      <uri>model://props/pine_tree</uri>
+      <pose relative_to='world_offset'>3 2 0 0 0 0</pose>   
+      <name>pine_tree</name>
+      <static>true</static>
+    </include>
+
+    <!-- Oak tree -->
+    <include>
+      <uri>model://props/oak_tree</uri>
+      <pose relative_to='world_offset'>-2 -10 0 0 0 0</pose>   
+      <name>oak_tree</name>
+      <static>true</static>
+    </include>
+
+    <!-- Construction barrel -->
+    <include>
+      <uri>model://props/falling_rock3</uri>
+      <pose relative_to='world_offset'>-3.26847 -2.977565 0.3 0 0 0</pose>
+      <name>falling_rock</name>
+      <static>true</static>
+    </include>
+
+    <!-- Construction cone -->
+    <include>
+      <uri>model://props/construction_cone</uri>
+      <pose relative_to='world_offset'>-2.96847 2.677565 0 0 0 0</pose>
+      <name>construction_cone</name>
+    </include>
+
+    <!-- Pine Tree 2 -->
+    <include>
+      <uri>model://props/pine_tree</uri>
+      <pose relative_to='world_offset'>5.58412 -3.73836 0 0 0 0</pose>
+      <name>pine_tree2</name>
+    </include>
+
+    <!-- Pine Tree 3 -->
+    <include>
+      <uri>model://props/pine_tree</uri>
+      <pose relative_to='world_offset'>-12.58412 3.93836 0 0 0 0</pose>
+      <name>pine_tree3</name>
+    </include>
+
+    <!-- Oak Tree 2 -->
+    <include>
+      <uri>model://props/oak_tree</uri>
+      <pose relative_to='world_offset'>-1 4 0 0 0 0</pose>
+      <name>oak_tree2</name>
+    </include>
+
+    <!-- Small Rock Fall -->
+    <include>
+      <uri>model://props/small_rock_fall</uri>
+      <pose relative_to='world_offset'>-7.5 2.8 0.05 0 0 0</pose>
+      <name>small_rock_fall</name>
+      <static>true</static>
+    </include>
+
+    <!-- Oak Tree 3 -->
+    <include>
+      <uri>model://props/oak_tree</uri>
+      <pose relative_to='world_offset'>-7.5 10.8 0 0 0 1.57</pose>
+      <name>oak_tree3</name>
+      <static>true</static>
+    </include>
+
+    <!-- Oak Tree 4 -->
+    <include>
+      <uri>model://props/oak_tree</uri>
+      <pose relative_to='world_offset'>-11.5 -5.5 0 0 0 -2.8</pose>
+      <name>oak_tree4</name>
+    </include>
+
+    <!-- Construction barrel 2 -->
+    <include>
+      <uri>model://props/construction_barrel</uri>
+      <name>construction_barrel2</name>
+      <pose relative_to='world_offset'>-8.04248 -3.932954 0 0 0 1.57</pose>
+    </include>
+
+    <!-- Cylinder Large -->
+    <include>
+      <uri>model://primitives/cylinder_large</uri>
+      <name>cylinder_large</name>
+      <pose relative_to='world_offset'>0 -1.5 0.5 0 0 0</pose>
+      <static>true</static>
+    </include>
+
+    <!-- Cuboid Medium -->
+    <include>
+      <uri>model://primitives/cuboid_medium</uri>
+      <name>cuboid_medium</name>
+      <pose relative_to='world_offset'>2.5 -5 0.5 0 0 0</pose>
+      <static>true</static>
+    </include>
+
+    <!-- Cubic Medium -->
+    <include>
+      <uri>model://primitives/cubic_medium</uri>
+      <name>cubic_medium</name>
+      <pose relative_to='world_offset'>-0.5 -7.25 0.5 0 0 0</pose>
+      <static>true</static>
+    </include>
+
+    <!-- Cylinder Medium -->
+    <include>
+      <uri>model://primitives/cylinder_medium</uri>
+      <name>cylinder_medium</name>
+      <pose relative_to='world_offset'>-2. 6.3 0.5 0 0 0</pose>
+      <static>true</static>
+    </include>
+
+    <!-- Cardboard box models -->
+    <!-- <model name='cardboard_box_0'>
+      <pose relative_to='world_offset'>3.96847 0.977565 0.15 0 0 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>2</mass>
+          <inertia>
+            <ixx>0.0416667</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0566667</iyy>
+            <iyz>0</iyz>
+            <izz>0.0683333</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.5 0.4 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.75 0.65 0.48 1</ambient>
+            <diffuse>0.75 0.65 0.48 1</diffuse>
+            <specular>0.08 0.08 0.08 1</specular>
+          </material>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.5 0.4 0.3</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <model name='cardboard_box_1'>
+      <pose relative_to='world_offset'>0.006438 -3.96264 0.15 0 0 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>2</mass>
+          <inertia>
+            <ixx>0.0416667</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0566667</iyy>
+            <iyz>0</iyz>
+            <izz>0.0683333</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.5 0.4 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.75 0.65 0.48 1</ambient>
+            <diffuse>0.75 0.65 0.48 1</diffuse>
+            <specular>0.08 0.08 0.08 1</specular>
+          </material>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.5 0.4 0.3</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <model name='cardboard_box_2'>
+      <pose relative_to='world_offset'>-4.88373 2.96722 0.15 0 0 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>2</mass>
+          <inertia>
+            <ixx>0.0416667</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0566667</iyy>
+            <iyz>0</iyz>
+            <izz>0.0683333</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.5 0.4 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.75 0.65 0.48 1</ambient>
+            <diffuse>0.75 0.65 0.48 1</diffuse>
+            <specular>0.08 0.08 0.08 1</specular>
+          </material>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.5 0.4 0.3</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <model name='cardboard_box_3'>
+      <pose relative_to='world_offset'>-0.0158 3.98725 0.15 0 0 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>2</mass>
+          <inertia>
+            <ixx>0.0416667</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0566667</iyy>
+            <iyz>0</iyz>
+            <izz>0.0683333</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.5 0.4 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.75 0.65 0.48 1</ambient>
+            <diffuse>0.75 0.65 0.48 1</diffuse>
+            <specular>0.08 0.08 0.08 1</specular>
+          </material>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.5 0.4 0.3</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model> -->
+
+    <!-- Physics engine configuration -->
+    <!-- <physics name='default_physics' type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics> -->
+
+    <!-- Scene configuration -->
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.65 0.65 0.65 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <!-- Gravity -->
+    <gravity>0 0 -9.8</gravity>
+
+    <!-- Magnetic field -->
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+
+    <!-- Atmosphere -->
+    <atmosphere type='adiabatic'/>
+
+  </world>
+</sdf>

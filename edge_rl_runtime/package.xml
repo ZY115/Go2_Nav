@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>edge_rl_runtime</name>
+  <version>1.0.0</version>
+  <description>A Runtime Environment for Edge Robot DRL Learning</description>
+  <maintainer email="yihao.cai@wayne.edu">Yihao Cai</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>nav_msgs</depend>
+  <depend>yaml-cpp</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>edge_msgs</depend>
+  <depend>edge_ros_interfaces</depend>
+  <depend>control_input_msgs</depend>
+  <depend>unitree_api</depend>
+  <depend>go2_sport_api</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

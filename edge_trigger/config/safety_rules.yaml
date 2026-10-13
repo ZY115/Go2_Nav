@@ -1,0 +1,138 @@
+# =========================================================
+# Switching Rules Configuration
+# 
+# Defines conditions for controller switching between 
+# different control modes (e.g., MPC ↔ Safety Controller)
+#
+# Two types of switching rules:
+# 
+# type: relative (default) - |error_x| <= limit is SAFE
+#    - index: errorState index --> error_x[index]
+#    - limit: threshold value
+#    - unit: unit for display/conversion
+#
+# type: absolute - lower < x < upper is SAFE  
+#    - index: robotState index --> x[index]
+#    - bound: [lower, upper]  # array format
+#    - unit: unit for display/conversion
+# =========================================================
+
+debug:
+  enabled: false   # set to true to enable debug logging
+
+switching:
+  enabled: true
+  conditions:
+    # ===== Orientation Limits =====
+    # roll limit in degrees (relative mode: |roll| <= 2 deg)
+    # roll:   
+    #   type: relative
+    #   index: 3
+    #   limit: 10.0
+    #   unit: deg
+
+    # pitch limit in degrees (relative mode)
+    # pitch:
+    #   type: relative
+    #   index: 4
+    #   limit: 6.0
+    #   unit: deg
+
+    # ===== Position Limits =====
+    # height limit in meters (relative mode)
+    # height:
+    #   type: relative
+    #   index: 2
+    #   limit: 0.05   # (original 0.08)
+    #   unit: m
+
+    # ===== Velocity Limits =====
+    # vertical velocity limit in meters per second (relative mode)
+    # vz:
+    #   type: relative
+    #   index: 8
+    #   limit: 0.2
+    #   unit: m/s
+
+    # velocity limit in meters per second (relative mode)
+    # vx:
+    #   type: relative
+    #   index: 6
+    #   limit: 0.15
+    #   unit: m/s
+
+    # velocity limit in meters per second (relative mode)
+    # vy:
+    #   type: relative
+    #   index: 7
+    #   limit: 1.2
+    #   unit: m/s
+
+    # ===== Angular Velocity Limits =====
+    # roll_rate limit in degrees per second (relative mode) 8.0
+    wx: 
+      type: relative
+      index: 9
+      limit: 40.0
+      unit: deg/s
+    
+    # pitch_rate limit in degrees per second (relative mode)
+    wy:
+      type: relative
+      index: 10
+      limit: 40.0  # 7.5
+      unit: deg/s
+
+    # angular velocity limit in radians per second (relative mode)
+    # wz:
+    #   type: relative
+    #   index: 11
+    #   limit: 2.0
+    #   unit: rad/s
+
+    # ===== Obstacle Avoidance =====
+    # distance limit to obstacles in meters (reference to local planner)
+    obstacle_distance:
+      type: relative
+      index: -1           # -1 means not used for errorState
+      limit: 1.2          # 1.2 has good result
+      unit: m
+
+    goal_distance:
+      type: relative
+      index: -1   # -1 means not used for errorState
+      limit: 22.5
+      # limit: 9.0
+      unit: m
+
+  # =========================================================
+  # EXAMPLE: Absolute bound rules (uncomment to use)
+  # =========================================================
+  # examples:
+    # Example: height must be in range (0.25m, 0.45m) to be safe
+    # height:
+    #   type: absolute
+    #   index: 2
+    #   bound: [0.25, 0.45]
+    #   unit: m
+
+    # Example: x position must be in range (0.3, 0.7) to be safe
+    # px:
+    #   type: absolute
+    #   index: 0
+    #   bound: [0.3, 0.7]
+    #   unit: m
+
+# =========================================================
+# Fall Detection Rules
+# 
+# Separate from switching conditions, these rules detect
+# critical fall scenarios that require immediate intervention
+# =========================================================
+fall_detection:
+  enabled: true
+  
+  thresholds:
+    height: 0.10      # in meters - critical height drop (below this is a fall)
+    roll: 1.845       # in radians - critical roll angle  (approx 135 degrees)
+    pitch: 1.845      # in radians - critical pitch angle (approx 135 degrees)

@@ -1,0 +1,34 @@
+reward:
+  # upright: 0.02
+  # contact_consistency: 0.008
+  # foot_slipping: 0.032
+  # foot_clearance: 0.008
+  # out_of_bound_action: 0.01
+  # knee_contact: 5
+  # stepping_freq: 0.008
+  # com_distance_to_goal_squared: 0.016
+  # alive: 10
+
+  # body_contact: 100
+  # energy_consumption: 0.05
+  # lin_vel_tracking: 5
+  # ang_vel_tracking: 5
+  # orientation_tracking: 80
+  # height_tracking: 50
+  
+  teacher_activation: 0.3
+  # student_activation_reward: 0.1
+
+  time_travel: 0.1
+  obstacle_min_distance: 0.05
+  # obstacle_avg_distance: 0.01
+  goal_distance: 0.01
+
+  # lyapunov: 100
+  body_state: 0.1
+
+  lateral_move: 0.002
+  jerky_action: 0.0002
+
+  # fall_down: 10000
+  # reach_goal: 500

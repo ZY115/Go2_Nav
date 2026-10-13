@@ -1,0 +1,22 @@
+# Shared parameters
+/**:
+  ros__parameters:
+    synthesis_state_topic: "/edge/synthesis_state"  # topic name for subscribing the state used for gain synthesis
+    synthesized_gain_topic: "/edge/synthesized_gain"  # topic name for publishing synthesized gain
+
+# Physical Teacher settings
+/edge/phy_teacher:
+  ros__parameters:
+
+    update_rate: 400          # update rate in Hz
+    realtime_patch:
+      chi: 0.0                # safety scaling factor χ
+      enable: true            # whether to enable the real-time patch for faster processing (experimental, use with caution)
+
+# Gain synthesizer settings
+/edge/gain_synthesizer:
+  ros__parameters:
+
+    sampling_rate: 40              # sampling rate in Hz
+    set_cpu_affinity: 1            # specify which CPU core(s) the node should run on
+    print_process_time: true      # whether to print the process time

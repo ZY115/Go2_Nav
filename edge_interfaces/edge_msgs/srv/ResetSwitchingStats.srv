@@ -1,0 +1,6 @@
+# Request: Reset all switching statistics
+# Empty request - reset everything
+---
+
+bool success          # Whether the reset was successful
+string message        # Optional message (e.g. "statistics cleared")

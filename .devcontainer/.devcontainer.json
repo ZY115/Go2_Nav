@@ -1,0 +1,36 @@
+{
+  "name": "Edge Brain Dev",
+  "image": "edge-brain-go2:jetson",
+
+  "runArgs": [
+    "--runtime=nvidia",
+    "--network=host",
+    "--pid=host",
+    "--ipc=host",
+    "--env=DISPLAY=:1",
+    "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+    "--privileged"
+  ],
+
+  "workspaceFolder": "/home/edgebot/edge_ws",
+  "remoteUser": "edgebot",
+
+  "containerEnv": {
+    "QT_X11_NO_MITSHM": "1",
+    "LD_LIBRARY_PATH": "/usr/local/lib:/usr/local/cuda-12.6/lib64:${containerEnv:LD_LIBRARY_PATH}"
+  },
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "ms-iot.vscode-ros",
+        "ms-python.python",
+        "ms-vscode.cpptools",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}

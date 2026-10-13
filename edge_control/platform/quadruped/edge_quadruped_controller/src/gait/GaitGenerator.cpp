@@ -1,0 +1,106 @@
+/*
+ * Copyright (c) 2025-2026 Yihao Cai - All rights reserved
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <utility>
+#include <edge_quadruped_controller/control/CtrlComponent.h>
+#include <edge_quadruped_controller/estimator/Estimator.hpp>
+#include <edge_quadruped_controller/gait/PhaseScheduler.h>
+#include "edge_quadruped_controller/gait/GaitGenerator.h"
+
+namespace edge::control::quadruped
+{
+
+GaitGenerator::GaitGenerator(CtrlComponent &ctrl_component)
+    : phase_scheduler_(ctrl_component.phase_scheduler_),
+      estimator_(ctrl_component.estimator_),
+      footstep_planner_(ctrl_component) {
+    first_run_ = true;
+}
+
+void GaitGenerator::setGait(Vec2 vxy_goal_global, double d_yaw_goal, double gait_height) {
+    vxy_goal_ = std::move(vxy_goal_global);
+    d_yaw_goal_ = d_yaw_goal;
+    gait_height_ = gait_height;
+}
+
+void GaitGenerator::generate(Vec34 &feet_pos, Vec34 &feet_vel) {
+    if (first_run_) {
+        start_p_ = estimator_->getFeetPos();
+        first_run_ = false;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        if (phase_scheduler_->contact_(i) == 1) {
+            if (phase_scheduler_->phase_(i) < 0.5) {
+                // foot contact the ground
+                start_p_.col(i) = estimator_->getFootPos(i);
+            }
+            feet_pos.col(i) = start_p_.col(i);
+            feet_vel.col(i).setZero();
+        } else {
+            // foot not contact, swing
+            end_p_.col(i) = footstep_planner_.calcFootPos(i, vxy_goal_, d_yaw_goal_, phase_scheduler_->phase_(i));
+            feet_pos.col(i) = getFootPos(i);
+            feet_vel.col(i) = getFootVel(i);
+        }
+    }
+}
+
+void GaitGenerator::restart() {
+    first_run_ = true;
+    vxy_goal_.setZero();
+}
+
+Vec3 GaitGenerator::getFootPos(const int i) {
+    Vec3 foot_pos;
+    foot_pos(0) = cycloidXYPosition(start_p_.col(i)(0), end_p_.col(i)(0), phase_scheduler_->phase_(i));
+    foot_pos(1) = cycloidXYPosition(start_p_.col(i)(1), end_p_.col(i)(1), phase_scheduler_->phase_(i));
+    foot_pos(2) = cycloidZPosition(start_p_.col(i)(2), gait_height_, phase_scheduler_->phase_(i));
+    return foot_pos;
+}
+
+Vec3 GaitGenerator::getFootVel(const int i) {
+    Vec3 foot_vel;
+
+    foot_vel(0) =
+            cycloidXYVelocity(start_p_.col(i)(0), end_p_.col(i)(0), phase_scheduler_->phase_(i));
+    foot_vel(1) =
+            cycloidXYVelocity(start_p_.col(i)(1), end_p_.col(i)(1), phase_scheduler_->phase_(i));
+    foot_vel(2) = cycloidZVelocity(gait_height_, phase_scheduler_->phase_(i));
+    return foot_vel;
+}
+
+double GaitGenerator::cycloidXYPosition(const double startXY, const double endXY, const double phase) {
+    const double phase_pi = 2 * M_PI * phase;
+    return (endXY - startXY) * (phase_pi - sin(phase_pi)) / (2 * M_PI) + startXY;
+}
+
+double GaitGenerator::cycloidZPosition(const double startZ, const double height, const double phase) {
+    const double phase_pi = 2 * M_PI * phase;
+    return height * (1 - cos(phase_pi)) / 2 + startZ;
+}
+
+double GaitGenerator::cycloidXYVelocity(const double startXY, const double endXY, const double phase) const {
+    const double phase_pi = 2 * M_PI * phase;
+    return (endXY - startXY) * (1 - cos(phase_pi)) / phase_scheduler_->get_t_swing();
+}
+
+double GaitGenerator::cycloidZVelocity(const double height, const double phase) const {
+    const double phase_pi = 2 * M_PI * phase;
+    return height * M_PI * sin(phase_pi) / phase_scheduler_->get_t_swing();
+}
+
+void GaitGenerator::reset() {
+    first_run_ = true;
+    
+    start_p_.setZero();
+    end_p_.setZero();
+    
+    vxy_goal_.setZero();
+    d_yaw_goal_ = 0.0;
+
+}
+
+} 

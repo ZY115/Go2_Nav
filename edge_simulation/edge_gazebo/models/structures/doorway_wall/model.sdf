@@ -1,0 +1,55 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name='doorway_wall'>
+    <static>true</static>
+    <link name='Wall_1'>
+      <pose>2.38813 -2.48047 0 0 0 0</pose>
+      <visual name='Wall_1_Visual'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.75 0.15 1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.8 0.8 0.78 1</ambient>
+          <diffuse>0.8 0.8 0.78 1</diffuse>
+          <specular>0.03 0.03 0.03 1</specular>
+        </material>
+      </visual>
+      <collision name='Wall_1_Collision'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.75 0.15 1</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name='Wall_2'>
+      <pose>3.20562 -1.28798 0 0 0 1.5708</pose>
+      <visual name='Wall_2_Visual'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>2.5 0.15 1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.8 0.8 0.78 1</ambient>
+          <diffuse>0.8 0.8 0.78 1</diffuse>
+          <specular>0.03 0.03 0.03 1</specular>
+        </material>
+      </visual>
+      <collision name='Wall_2_Collision'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>2.5 0.15 1</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

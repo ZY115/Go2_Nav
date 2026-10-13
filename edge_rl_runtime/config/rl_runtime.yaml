@@ -1,0 +1,19 @@
+/edge/rl_runtime_node:
+  ros__parameters:
+
+    navigation:
+      goal_threshold: 1.25     # distance threshold to consider episode done in real world
+      # goal_threshold: 1.0   # distance threshold to consider episode done
+
+    episode:
+      horizon_steps: 1200000     # maximum number of steps per episode, after which the episode is terminated
+
+    topics:
+      odom_topic: "/odom"                             # topic name for GO2 odometry input
+      robot_state_topic: "/edge/robot_state"          # topic name for GO2 high state input
+      tracking_error_topic: "/edge/tracking_error"    # topic name for tracking error input
+      terminal_action_topic: "/edge/terminal_action"  # topic name for terminal action output
+
+
+    is_real_robot: true  # whether the system is running on a real robot or in simulation
+    task_type: "end2end"  # type of task, e.g., "navigation", "locomotion", "end2end" etc.

@@ -1,0 +1,98 @@
+# Controller Manager configuration
+controller_manager:
+  ros__parameters:
+    update_rate: 1000  # Hz
+
+    # Define the available controllers
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster
+
+    edge_quadruped_controller:
+      type: edge_quadruped_controller/EdgeQuadrupedController
+  
+imu_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: "imu_sensor"
+    frame_id: "imu_link"
+
+edge_quadruped_controller:
+  ros__parameters:
+    update_rate: 500  # Hz
+
+    # vx_limit: [-0.8, 0.8]  # m/s
+    # vy_limit: [-0.2, 0.2]  # m/s
+    # wz_limit: [-1.0, 1.0]  # rad/s
+
+    vx_limit: [0.1, 0.3]  # m/s
+    vy_limit: [-0.3, 0.3]  # m/s
+    wz_limit: [-0.5, 0.5]  # rad/s
+
+    topic_namespace: "edge"
+    odom_frame_id: "leg_odom"
+    base_frame_id: "base_link"
+
+    gait_height: 0.1
+    robot_name: "go2"
+    down_pos:
+      - -0.01
+      - 1.27
+      - -2.8
+      - 0.01
+      - 1.27
+      - -2.8
+      - -0.3
+      - 1.31
+      - -2.8
+      - 0.3
+      - 1.31
+      - -2.8
+    joints:
+      - FR_hip_joint
+      - FR_thigh_joint
+      - FR_calf_joint
+      - FL_hip_joint
+      - FL_thigh_joint
+      - FL_calf_joint
+      - RR_hip_joint
+      - RR_thigh_joint
+      - RR_calf_joint
+      - RL_hip_joint
+      - RL_thigh_joint
+      - RL_calf_joint
+
+    command_interfaces:
+      - kp
+      - kd
+      - position
+      - velocity
+      - effort
+
+    state_interfaces:
+      - position
+      - velocity
+      - effort
+
+    feet_names:      
+      - FR_foot
+      - FL_foot
+      - RR_foot
+      - RL_foot
+
+    imu_name: "imu_sensor"
+    imu_interfaces:
+      - orientation.w
+      - orientation.x
+      - orientation.y
+      - orientation.z
+      - angular_velocity.x
+      - angular_velocity.y
+      - angular_velocity.z
+      - linear_acceleration.x
+      - linear_acceleration.y
+      - linear_acceleration.z
+
+
+

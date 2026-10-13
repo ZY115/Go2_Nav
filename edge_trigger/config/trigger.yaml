@@ -1,0 +1,24 @@
+/edge/trigger:
+  ros__parameters:
+    trigger_mode: "self"         # trigger mode, options: "self" -- self-trigger, "event" -- event-trigger
+    dwell_steps: 200             # 300 number of steps to hold teacher action in self-trigger mode (tested in real robot)
+    
+    # [本地修改] 原为 -1（auto）。auto 下 selectAction() 在系统 SAFE 时一律返回
+    # STUDENT，但 drl_student 在 bringup.real.end2end.launch.py:301 是注释掉的、
+    # 从不启动，于是 is_stu_action_initialized_ 恒为 false，trigger 直接 return，
+    # 把 phy_teacher 算好的 6 维机身加速度全部丢弃。结果 FSMTrotting::calcTau 里
+    # accel 恒为零向量 —— dd_pcd / d_wbd 都是 0，机身姿态与速度误差完全没有反馈，
+    # 只剩重力补偿 + 落足规划 + 关节 PD，走起来机身发飘。
+    # 教师侧是完好的（日志持续输出 "LMI optimization succeeded"）。
+    # 在接上 student 之前，这里必须锁定为 1（teacher）。
+    action_source: -1            # action source, options: -1 -- auto, 0 -- student, 1 -- teacher
+    print_processing: false      # whether to print processing
+    start_with_teacher: true     # whether to start with teacher mode
+
+    update_rate: 400.0           # trigger update rate in Hz
+
+    monitor_state_name: "/edge/robot_state"  # topic name for robot state input to safety monitor
+    # teacher_topic_name: "/edge/phy_teacher_action_vel"  # topic name for teacher action (navigation)
+    teacher_topic_name: "/edge/phy_teacher_action"  # topic name for teacher action (locomotion)
+    student_topic_name: "/edge/drl_student_action"  # topic name for student action
+    terminal_action_name: "/edge/terminal_action"  # topic name for terminal action

@@ -1,0 +1,19 @@
+# Request: Get detailed switching statistics
+# Empty request - just query current stats
+---
+
+# Switching reason breakdown
+string[] switching_reasons           # List of unique switching reasons
+uint32[] reason_counts               # Corresponding violation counts for each reason
+
+# Switching frequencies
+uint32 total_switches                # Total number of mode switches
+float32 student_switch_ratio         # Ratio of switches to student mode (0-1)
+
+# Action counts
+uint32 total_action_count            # Total count of all actions
+float32 student_action_ratio         # Ratio of actions in student mode (0-1)
+
+# Action durations
+float32 total_duration               # Total time spent in both modes (seconds)
+float32 student_time_ratio           # Ratio of time spent in student mode (0-1)

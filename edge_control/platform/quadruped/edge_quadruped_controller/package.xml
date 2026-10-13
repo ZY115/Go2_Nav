@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>edge_quadruped_controller</name>
+  <version>0.0.0</version>
+  <description>A ros2-based Controller for Quadruped Robot on Edge Devices</description>
+  <maintainer email="yihao.cai@wayne.edu">Yihao Cai</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  
+  <depend>edge_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>edge_ros_interfaces</depend>
+  <depend>controller_interface</depend>
+  <depend>controller_common</depend>
+  <depend>pluginlib</depend>
+  <depend>control_input_msgs</depend>
+  <depend>pinocchio</depend>
+  <depend>go2_description</depend>
+  <depend>unitree_go2_hardware</depend>
+  <depend>gz_quadruped_hardware</depend>
+  <depend>gz_quadruped_playground</depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>tf2_ros</depend>
+  <!-- <depend>phy_teacher_interfaces</depend> -->
+
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>ros2_control</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

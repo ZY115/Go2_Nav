@@ -1,0 +1,105 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name='cubic_groove'>
+    <static>true</static>
+    <link name='Wall_1'>
+      <pose>2.724 3.029 0 0 0 0</pose>
+      <visual name='Wall_1_Visual'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.2678 0.15 1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.6 0.32 0.22 1</ambient>
+          <diffuse>0.6 0.32 0.22 1</diffuse>
+          <specular>0.08 0.08 0.08 1</specular>
+        </material>
+      </visual>
+      <collision name='Wall_1_Collision'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.2678 0.15 1</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name='Wall_2'>
+      <pose>3.2915 2.6215 0 0 0 -1.54994</pose>
+      <visual name='Wall_2_Visual'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.965005 0.15 1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.6 0.32 0.22 1</ambient>
+          <diffuse>0.6 0.32 0.22 1</diffuse>
+          <specular>0.08 0.08 0.08 1</specular>
+        </material>
+      </visual>
+      <collision name='Wall_2_Collision'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.965005 0.15 1</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name='Wall_3'>
+      <pose>2.75 2.214 0 0 0 3.14159</pose>
+      <visual name='Wall_3_Visual'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.25 0.15 1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.6 0.32 0.22 1</ambient>
+          <diffuse>0.6 0.32 0.22 1</diffuse>
+          <specular>0.08 0.08 0.08 1</specular>
+        </material>
+      </visual>
+      <collision name='Wall_3_Collision'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.25 0.15 1</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name='Wall_4'>
+      <pose>2.1825 2.6215 0 0 0 1.61372</pose>
+      <visual name='Wall_4_Visual'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.965005 0.15 1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.6 0.32 0.22 1</ambient>
+          <diffuse>0.6 0.32 0.22 1</diffuse>
+          <specular>0.08 0.08 0.08 1</specular>
+        </material>
+      </visual>
+      <collision name='Wall_4_Collision'>
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.965005 0.15 1</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

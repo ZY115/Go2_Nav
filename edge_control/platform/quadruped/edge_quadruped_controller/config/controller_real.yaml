@@ -1,0 +1,127 @@
+# Controller Manager configuration
+controller_manager:
+  ros__parameters:
+    update_rate: 400  # Hz
+    # thread_priority: 99
+
+    # Define the available controllers
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster
+
+    edge_quadruped_controller:
+      type: edge_quadruped_controller/EdgeQuadrupedController
+
+imu_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: "imu_sensor"
+    frame_id: "imu_link"
+
+edge_quadruped_controller:
+  ros__parameters:
+    # MUST match controller_manager's update_rate above. The controller reads THIS
+    # value into ctrl_interfaces_.frequency_ and derives dt_ = 1/frequency_, but it
+    # is actually called at the manager's rate. At 500 here vs 400 there, dt_ was
+    # 0.002 s while the real period was 0.0025 s, so every integration in
+    # FSMTrotting (pcd_ body position, yaw_cmd_) advanced 20% slower than real
+    # time -- while PhaseScheduler stepped the gait on wall-clock time. The feet
+    # cycled at the right rate against a body setpoint that lagged behind them.
+    update_rate: 400  # Hz
+
+    # 机身镇定来源。true = FSMTrotting 环内本地 PD（增益 Kpp/Kdp/kp_w_/Kd_w_ 写在
+    # FSMTrotting 构造函数里）；false = 外部 phy_teacher -> trigger -> rl_runtime 链路。
+    # 外部链路在系统判定 SAFE 时不发布（trigger 选 STUDENT 而 drl_student 未启动），
+    # accel 会恒为零向量、机身姿态完全开环 —— 这是行走发飘的直接原因。
+    # 出问题时把这里改成 false 即可一键切回原行为，无需重新编译。
+    use_local_balance_pd: true
+
+    # yaw_cmd_ 相对实际 yaw 的最大超前量 [rad]。原来偏航是纯开环积分、无任何修正，
+    # 跟不上指令偏航率时误差无界累积。0.10 rad ≈ 5.7 度，与 pcd_ 的 ±0.05 m 同思路。
+    # 转向明显迟钝就调大，机身抖就调小。
+    yaw_leash: 0.10
+
+    vx_limit: [0.05, 0.5]  # m/s
+    vy_limit: [-0.3, 0.3]  # m/s
+    wz_limit: [-0.5, 0.5]  # rad/s
+
+    # Arrival stop: once the robot is within arrive_radius of /goal_point the
+    # commanded velocity is ramped to zero over decel_time, so it settles into a
+    # stationary trot (legs keep cycling, balance kept) instead of being halted
+    # abruptly. Once stopped it STAYS stopped -- the only thing that starts it
+    # again is a new /goal_point at least resume_radius away from the robot.
+    # (Releasing on distance instead made overshoot cancel the stop: the robot
+    # coasted past the goal, left the release radius and re-accelerated.)
+    arrive_radius: 0.5   # m -- stop when this close to the goal
+    resume_radius: 1.0   # m -- a new goal must be at least this far to resume
+    decel_time: 1.5      # s -- time to bleed full speed down to zero
+
+    topic_namespace: "edge"
+
+    odom_frame_id: "leg_odom"
+    base_frame_id: "base_link"
+
+    gait_height: 0.1
+    robot_name: "go2"
+    down_pos:
+      - -0.01
+      - 1.27
+      - -2.8
+      - 0.01
+      - 1.27
+      - -2.8
+      - -0.3
+      - 1.31
+      - -2.8
+      - 0.3
+      - 1.31
+      - -2.8
+    joints:
+      - FR_hip_joint
+      - FR_thigh_joint
+      - FR_calf_joint
+      - FL_hip_joint
+      - FL_thigh_joint
+      - FL_calf_joint
+      - RR_hip_joint
+      - RR_thigh_joint
+      - RR_calf_joint
+      - RL_hip_joint
+      - RL_thigh_joint
+      - RL_calf_joint
+
+    command_interfaces:
+      - kp
+      - kd
+      - position
+      - velocity
+      - effort
+
+    state_interfaces:
+      - position
+      - velocity
+      - effort
+
+    feet_names:
+      - FR_foot
+      - FL_foot
+      - RR_foot
+      - RL_foot
+
+    imu_name: "imu_sensor"
+    imu_interfaces:
+      - orientation.w
+      - orientation.x
+      - orientation.y
+      - orientation.z
+      - angular_velocity.x
+      - angular_velocity.y
+      - angular_velocity.z
+      - linear_acceleration.x
+      - linear_acceleration.y
+      - linear_acceleration.z
+      - roll
+      - pitch
+      - yaw
+      - temperature

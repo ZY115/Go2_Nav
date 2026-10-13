@@ -1,0 +1,15 @@
+sam_vit_b:
+  algorithm: SAM
+  model_path: "checkpoints/sam_vit_b_01ec64.pth"
+  model_type: "vit_b"
+  points_per_side: 16
+  pred_iou_thresh: 0.88
+  stability_score_thresh: 0.95
+  min_mask_region_area: 100
+
+yolo:
+  algorithm: YOLO
+  model_path: "checkpoints/yolov8n-seg.pt"
+  model_type: "yolov8"
+  confidence_threshold: 0.5
+  iou_threshold: 0.4

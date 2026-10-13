@@ -1,0 +1,168 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name='bookshelf'>
+    <static>true</static>
+    <link name='link'>
+      <!-- Back panel -->
+      <visual name='back_visual'>
+        <pose>0 0.005 0.6 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.9 0.01 1.2</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.45 0.28 0.13 1</ambient>
+          <diffuse>0.45 0.28 0.13 1</diffuse>
+          <specular>0.15 0.15 0.15 1</specular>
+        </material>
+      </visual>
+      <collision name='back_collision'>
+        <pose>0 0.005 0.6 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.9 0.01 1.2</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <!-- Left side panel -->
+      <visual name='left_visual'>
+        <pose>0.45 -0.195 0.6 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.4 1.2</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.45 0.28 0.13 1</ambient>
+          <diffuse>0.45 0.28 0.13 1</diffuse>
+          <specular>0.15 0.15 0.15 1</specular>
+        </material>
+      </visual>
+      <collision name='left_collision'>
+        <pose>0.45 -0.195 0.6 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.4 1.2</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <!-- Right side panel -->
+      <visual name='right_visual'>
+        <pose>-0.45 -0.195 0.6 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.4 1.2</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.45 0.28 0.13 1</ambient>
+          <diffuse>0.45 0.28 0.13 1</diffuse>
+          <specular>0.15 0.15 0.15 1</specular>
+        </material>
+      </visual>
+      <collision name='right_collision'>
+        <pose>-0.45 -0.195 0.6 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.4 1.2</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <!-- Bottom panel -->
+      <visual name='bottom_visual'>
+        <pose>0 -0.195 0.03 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.88 0.4 0.06</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.45 0.28 0.13 1</ambient>
+          <diffuse>0.45 0.28 0.13 1</diffuse>
+          <specular>0.15 0.15 0.15 1</specular>
+        </material>
+      </visual>
+      <collision name='bottom_collision'>
+        <pose>0 -0.195 0.03 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.88 0.4 0.06</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <!-- Top panel -->
+      <visual name='top_visual'>
+        <pose>0 -0.195 1.19 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.88 0.4 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.45 0.28 0.13 1</ambient>
+          <diffuse>0.45 0.28 0.13 1</diffuse>
+          <specular>0.15 0.15 0.15 1</specular>
+        </material>
+      </visual>
+      <collision name='top_collision'>
+        <pose>0 -0.195 1.19 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.88 0.4 0.02</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <!-- Lower shelf -->
+      <visual name='low_shelf_visual'>
+        <pose>0 -0.195 0.43 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.88 0.4 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.45 0.28 0.13 1</ambient>
+          <diffuse>0.45 0.28 0.13 1</diffuse>
+          <specular>0.15 0.15 0.15 1</specular>
+        </material>
+      </visual>
+      <collision name='low_shelf_collision'>
+        <pose>0 -0.195 0.43 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.88 0.4 0.02</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <!-- Upper shelf -->
+      <visual name='high_shelf_visual'>
+        <pose>0 -0.195 0.8 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.88 0.4 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.45 0.28 0.13 1</ambient>
+          <diffuse>0.45 0.28 0.13 1</diffuse>
+          <specular>0.15 0.15 0.15 1</specular>
+        </material>
+      </visual>
+      <collision name='high_shelf_collision'>
+        <pose>0 -0.195 0.8 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.88 0.4 0.02</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>
